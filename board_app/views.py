@@ -1,5 +1,6 @@
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from pprint import pprint
 
@@ -23,3 +24,19 @@ def signup_func(request):
                           context={'error': 'このユーザは登録されています。'})
 
     return render(request, template_name='signup.html', context={'some': 100})
+
+
+def login_func(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # Userの権限取得
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('signup')
+        else:
+            return redirect('login')
+
+    return render(request, template_name='login.html')
