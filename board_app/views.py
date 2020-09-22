@@ -5,6 +5,9 @@ from django.shortcuts import render, redirect
 from pprint import pprint
 
 # Create your views here.
+from board_app.models import BoardModel
+
+
 def signup_func(request):
 
     user2 = User.objects.all()
@@ -40,3 +43,9 @@ def login_func(request):
             return redirect('login')
 
     return render(request, template_name='login.html')
+
+
+def list_func(request):
+    object_list = BoardModel.objects.all()
+    return render(request, template_name='list.html', context={'object_list': object_list})
+
