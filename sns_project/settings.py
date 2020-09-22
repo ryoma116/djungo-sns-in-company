@@ -128,3 +128,6 @@ MEDIA_URL = '/medi/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/medi/'
+
+LOGIN_URL = 'login'
+
