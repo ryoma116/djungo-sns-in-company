@@ -63,3 +63,23 @@ def detail_func(request, pk):
     return render(request, template_name='detail.html', context={'object': object})
 
 
+@login_required
+def good_func(request, pk):
+    object = BoardModel.objects.get(pk=pk)
+    object.good += 1
+    object.save()
+    return redirect('list')
+
+
+@login_required
+def read_func(request, pk):
+    object = BoardModel.objects.get(pk=pk)
+    user_ids = object.readtext.split(',')
+    user_id = str(request.user.pk)
+    if user_id in user_ids:
+        return redirect('list')
+
+    object.read += 1
+    object.readtext += f',{user_id}'
+    object.save()
+    return redirect('list')
