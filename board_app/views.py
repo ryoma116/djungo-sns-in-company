@@ -57,3 +57,9 @@ def list_func(request):
     return render(request, template_name='list.html', context={'object_list': object_list})
 
 
+@login_required
+def detail_func(request, pk):
+    object = BoardModel.objects.get(pk=pk)
+    return render(request, template_name='detail.html', context={'object': object})
+
+
