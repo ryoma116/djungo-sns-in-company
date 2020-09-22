@@ -6,6 +6,9 @@ from django.shortcuts import render, redirect
 from pprint import pprint
 
 # Create your views here.
+from django.urls import reverse_lazy
+from django.views.generic import CreateView
+
 from board_app.models import BoardModel
 
 
@@ -83,3 +86,10 @@ def read_func(request, pk):
     object.readtext += f',{user_id}'
     object.save()
     return redirect('list')
+
+
+class BoardCreateView(CreateView):
+    template_name = 'create.html'
+    model = BoardModel
+    fields = ('title', 'content', 'images', 'author')
+    success_url = reverse_lazy('list')
